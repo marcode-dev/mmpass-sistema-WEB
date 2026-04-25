@@ -1,0 +1,85 @@
+.auth-body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at top right, #f7d9f1, transparent), 
+                radial-gradient(circle at bottom left, #d4f1e8, var(--bg-grad));
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 50px 40px;
+    text-align: center;
+}
+
+.logo {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.auth-subtitle {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-bottom: 35px;
+}
+
+.auth-card h2 {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    font-weight: 400;
+}
+
+.auth-msg {
+    margin-bottom: 20px;
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 14px;
+}
+
+.auth-msg.erro {
+    background: #fff5f5;
+    color: #c53030;
+}
+
+.auth-msg.sucesso {
+    background: #f0fff4;
+    color: #2f855a;
+}
+
+.auth-footer {
+    margin-top: 30px;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.auth-link {
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.auth-link-block {
+    display: block;
+    margin-top: 25px;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #4a5568;
+    margin-left: 5px;
+}
+
+.form-group input {
+    margin-top: 8px;
+}

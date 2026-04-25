@@ -5,7 +5,7 @@ require_once __DIR__ . '/../models/Evento.php';
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION['usuario_id'])) {
-    header("Location: /Sistema_MMPass/index.php");
+    header("Location: /mmpass-sistema-WEB/index.php");
     exit;
 }
 

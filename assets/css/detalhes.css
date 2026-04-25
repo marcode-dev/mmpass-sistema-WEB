@@ -1,0 +1,101 @@
+.stats-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    flex: 1;
+    padding: 25px;
+    text-align: center;
+}
+
+.stat-card-label {
+    color: var(--text-muted);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.stat-card h2 {
+    font-size: 2rem;
+    margin-top: 10px;
+}
+
+.status-active {
+    color: #4fd1c5;
+}
+
+.table-container {
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-top: 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 20px;
+    text-align: left;
+}
+
+th {
+    background: rgba(188, 152, 230, 0.1);
+    color: #b388eb;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.td-bold {
+    font-weight: 600;
+}
+
+.td-muted {
+    color: var(--text-muted);
+}
+
+.ticket-code {
+    font-family: monospace;
+    background: rgba(188, 152, 230, 0.1);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.status-badge.used {
+    background: rgba(248, 113, 113, 0.1);
+    color: #f87171;
+}
+
+.status-badge.available {
+    background: rgba(79, 209, 197, 0.1);
+    color: #4fd1c5;
+}
+
+.no-data-msg {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-muted);
+}
+
+td {
+    border-bottom: 1px solid rgba(0,0,0,0.02);
+}
+
+tr:last-child td {
+    border: none;
+}

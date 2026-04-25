@@ -14,14 +14,15 @@ if ($action == 'cadastrar') {
         $_POST['local'],
         $_POST['preco'],
         $_POST['imagem'],
+        $_POST['capacidade'], // Novo campo
         $_SESSION['usuario_id']
     );
-    header("Location: /Sistema_MMPass/dashboard.php");
+    header("Location: /mmpass-sistema-WEB/meus-eventos.php");
 
 } elseif ($action == 'excluir') {
     $id = $_GET['id'];
     $evento->excluir($id, $_SESSION['usuario_id']);
-    header("Location: /Sistema_MMPass/perfil.php");
+    header("Location: /mmpass-sistema-WEB/meus-eventos.php");
     exit();
 }
 ?>

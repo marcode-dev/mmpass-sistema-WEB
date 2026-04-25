@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+
+:root {
+    --primary-grad: linear-gradient(135deg, #78dccf 0%, #bc98e6 50%, #f7a4c7 100%);
+    --bg-grad: linear-gradient(135deg, #f0fdfa 0%, #fff1f2 100%);
+    --text-main: #2d3748;
+    --text-muted: #718096;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.4);
+    --shadow: 0 8px 32px rgba(31, 38, 135, 0.07);
+    --radius: 24px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+}
+
+body {
+    background: var(--bg-grad);
+    color: var(--text-main);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+h1, h2, h3 {
+    color: #1a202c;
+    font-weight: 700;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+.anim-delay-1 { animation-delay: 0.1s; }
+.anim-delay-2 { animation-delay: 0.2s; }
+.anim-delay-3 { animation-delay: 0.3s; }
+.anim-delay-4 { animation-delay: 0.4s; }
+
+/* Utilities */
+.mb-5 { margin-bottom: 5px; }
+.mb-10 { margin-bottom: 10px; }
+.mb-20 { margin-bottom: 20px; }
+.mb-30 { margin-bottom: 30px; }
+.mb-35 { margin-bottom: 35px; }
+.mb-40 { margin-bottom: 40px; }
+.mb-50 { margin-bottom: 50px; }
+.mt-5 { margin-top: 5px; }
+.mt-30 { margin-top: 30px; }
+
+.back-link {
+    margin-bottom: 30px;
+    display: inline-flex !important;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: 0.3s;
+    border: none !important;
+    padding-left: 0 !important;
+    color: #bc98e6;
+    background: transparent !important;
+    font-weight: 600;
+}
+
+.back-link:hover {
+    transform: translateX(-5px);
+}
+
+.flex-center-start {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.gap-10 { gap: 10px; }
+
+.h2-large { font-size: 2.2rem; }
+.text-main { color: var(--text-main); }
+.text-muted { color: var(--text-muted); }
+.w-full { width: 100%; }

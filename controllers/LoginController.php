@@ -19,10 +19,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['usuario_nome'] = $dadosUsuario['nome'];
         
    
-        header("Location: /Sistema_MMPass/dashboard.php");
+        header("Location: /mmpass-sistema-WEB/dashboard.php");
         exit();
     } else {
-        header("Location: /Sistema_MMPass/index.php?status=erro");
+        header("Location: /mmpass-sistema-WEB/index.php?status=erro");
         exit();
     }
 }

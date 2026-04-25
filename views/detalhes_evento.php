@@ -1,82 +1,114 @@
+<?php
+// Detalhes Evento View
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estatísticas - <?= htmlspecialchars($evento['nome']) ?></title>
-    <link rel="stylesheet" href="/Sistema_MMPass/assets/css/style.css">
+    <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/global.css?v=1.1">
+    <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/components.css?v=1.1">
+    <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/dashboard.css?v=1.1">
+    <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/detalhes.css?v=1.1">
     <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        .stats-container { display: flex; gap: 20px; margin-bottom: 30px; }
-        .stat-card { flex: 1; padding: 25px; text-align: center; }
-        .stat-card h2 { font-size: 2rem; margin-top: 10px; }
-        
-        .table-container {
-            border-radius: var(--radius);
-            overflow: hidden;
-            margin-top: 30px;
-        }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 20px; text-align: left; }
-        th { background: rgba(188, 152, 230, 0.1); color: #b388eb; font-weight: 700; text-transform: uppercase; font-size: 12px; letter-spacing: 1px; }
-        td { border-bottom: 1px solid rgba(0,0,0,0.02); }
-        tr:last-child td { border: none; }
-    </style>
 </head>
 <body>
     <div class="main-container">
-        <a href="perfil.php" class="btn-outline animate" style="margin-bottom: 30px; display: inline-flex; align-items: center; gap: 8px; border: none; padding-left: 0;">
-            <i data-lucide="chevron-left"></i> Voltar ao Perfil
+        <!-- Header -->
+        <div class="header glass animate">
+            <a href="/mmpass-sistema-WEB/dashboard.php" class="header-brand">
+                <img src="/mmpass-sistema-WEB/assets/logo.png" alt="Logo MMPass" class="header-logo">
+                <h1 class="gradient-text">MMPass</h1>
+            </a>
+
+            <nav class="header-nav">
+                <a href="/mmpass-sistema-WEB/dashboard.php" class="nav-link">
+                    <i data-lucide="layout-grid" class="icon-sm"></i> Mural
+                </a>
+                <a href="/mmpass-sistema-WEB/meus-eventos.php" class="nav-link active">
+                    <i data-lucide="calendar" class="icon-sm"></i> Meus Eventos
+                </a>
+                <a href="/mmpass-sistema-WEB/cupons.php" class="nav-link">
+                    <i data-lucide="ticket" class="icon-sm"></i> Cupons
+                </a>
+            </nav>
+
+            <div class="header-actions">
+                <a href="/mmpass-sistema-WEB/meus-eventos.php" class="user-profile-summary">
+                    <div class="user-avatar-sm">
+                        <?= strtoupper(substr($_SESSION['usuario_nome'], 0, 1)) ?>
+                    </div>
+                    <span><?= explode(' ', $_SESSION['usuario_nome'])[0] ?></span>
+                </a>
+                <a href="/mmpass-sistema-WEB/logout.php" class="btn-logout-icon" title="Sair do Portal">
+                    <i data-lucide="log-out" class="icon-sm"></i>
+                </a>
+            </div>
+        </div>
+
+        <a href="/mmpass-sistema-WEB/meus-eventos.php" class="btn-outline animate back-link">
+            <i data-lucide="chevron-left" class="icon-sm"></i> Voltar aos Meus Eventos
         </a>
 
         <div class="animate">
-            <h1 style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
-                <i data-lucide="bar-chart-big" style="color: #bc98e6;"></i> Gestão de Ingressos
+            <h1 class="mb-10 flex-center-start gap-10">
+                <i data-lucide="bar-chart-big" class="icon-purple"></i> Gestão de Ingressos
             </h1>
-            <h2 class="gradient-text" style="font-size: 2.2rem; margin-bottom: 40px;"><?= htmlspecialchars($evento['nome']) ?></h2>
+            <h2 class="gradient-text h2-large mb-40"><?= htmlspecialchars($evento['nome']) ?></h2>
         </div>
 
-        <div class="stats-container animate" style="animation-delay: 0.1s;">
+        <div class="stats-container animate anim-delay-1">
             <div class="stat-card glass">
-                <p style="color: var(--text-muted); font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                    <i data-lucide="ticket" style="width: 18px;"></i> Ingressos Vendidos
+                <p class="stat-card-label">
+                    <i data-lucide="ticket" class="icon-sm"></i> Ingressos Vendidos
                 </p>
                 <h2 class="gradient-text"><?= $total_ingressos ?></h2>
             </div>
-            <div class="stat-card glass" style="animation-delay: 0.15s;">
-                <p style="color: var(--text-muted); font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                    <i data-lucide="check-circle" style="width: 18px;"></i> Status do Evento
+            <div class="stat-card glass anim-delay-2">
+                <p class="stat-card-label">
+                    <i data-lucide="check-circle" class="icon-sm"></i> Status do Evento
                 </p>
-                <h2 style="color: #4fd1c5;">Ativo</h2>
+                <h2 class="status-active">Ativo</h2>
             </div>
-            <div class="stat-card glass" style="animation-delay: 0.2s;">
-                <p style="color: var(--text-muted); font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                    <i data-lucide="banknote" style="width: 18px;"></i> Preço Unitário
+            <div class="stat-card glass anim-delay-3">
+                <p class="stat-card-label">
+                    <i data-lucide="banknote" class="icon-sm"></i> Preço Unitário
                 </p>
-                <h2 style="color: var(--text-main);">R$ <?= number_format($evento['preco'], 2, ',', '.') ?></h2>
+                <h2 class="text-main">R$ <?= number_format($evento['preco'], 2, ',', '.') ?></h2>
             </div>
         </div>
 
-        <div class="table-container glass animate" style="animation-delay: 0.3s;">
+        <div class="table-container glass animate anim-delay-4">
             <table>
                 <thead>
                     <tr>
                         <th>Comprador</th>
                         <th>E-mail de Contato</th>
+                        <th>Código</th>
+                        <th>Status</th>
                         <th>Data da Transação</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach($compras as $c): ?>
                     <tr>
-                        <td style="font-weight: 600;"><?= htmlspecialchars($c['comprador_nome']) ?></td>
-                        <td style="color: var(--text-muted);"><?= htmlspecialchars($c['comprador_email']) ?></td>
-                        <td style="color: var(--text-muted);"><?= date('d/m/Y H:i', strtotime($c['data_compra'])) ?></td>
+                        <td class="td-bold"><?= htmlspecialchars($c['comprador_nome']) ?></td>
+                        <td class="td-muted"><?= htmlspecialchars($c['comprador_email']) ?></td>
+                        <td class="ticket-code"><?= htmlspecialchars($c['codigo']) ?></td>
+                        <td>
+                            <?php if($c['usado']): ?>
+                                <span class="status-badge used">Utilizado</span>
+                            <?php else: ?>
+                                <span class="status-badge available">Disponível</span>
+                            <?php endif; ?>
+                        </td>
+                        <td class="td-muted"><?= date('d/m/Y H:i', strtotime($c['data_compra'])) ?></td>
                     </tr>
                     <?php endforeach; ?>
                     <?php if(empty($compras)): ?>
                     <tr>
-                        <td colspan="3" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                        <td colspan="5" class="no-data-msg">
                             Nenhum ingresso vendido para este evento ainda.
                         </td>
                     </tr>

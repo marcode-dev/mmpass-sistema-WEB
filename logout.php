@@ -2,5 +2,5 @@
 session_start();
 session_unset(); 
 session_destroy(); 
-header("Location: /Sistema_MMPass/index.php"); 
+header("Location: /mmpass-sistema-WEB/index.php"); 
 exit();

@@ -13,16 +13,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Verifica se o e-mail já existe utilizando o Model
     if ($usuarioModel->emailExiste($email)) {
-        header("Location: /Sistema_MMPass/cadastro.php?status=existe");
+        header("Location: /mmpass-sistema-WEB/cadastro.php?status=existe");
         exit();
     } 
 
     // Realiza o cadastro utilizando o Model
     if ($usuarioModel->cadastrar($nome, $email, $senha)) {
-        header("Location: /Sistema_MMPass/index.php?status=cadastrado");
+        header("Location: /mmpass-sistema-WEB/index.php?status=cadastrado");
         exit();
     } else {
-        header("Location: /Sistema_MMPass/cadastro.php?status=erro");
+        header("Location: /mmpass-sistema-WEB/cadastro.php?status=erro");
         exit();
     }
 }
