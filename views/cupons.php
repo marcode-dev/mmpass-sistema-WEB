@@ -1,6 +1,3 @@
-<?php
-// A view recebe $cupons e $cupomModel do CupomController.php
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -17,31 +14,31 @@
     <div class="main-container">
         <!-- Header -->
         <div class="header glass animate">
-            <a href="/mmpass-sistema-WEB/dashboard.php" class="header-brand">
+            <a href="index.php?url=dashboard" class="header-brand">
                 <img src="/mmpass-sistema-WEB/assets/logo.png" alt="Logo MMPass" class="header-logo">
                 <h1 class="gradient-text">MMPass</h1>
             </a>
 
             <nav class="header-nav">
-                <a href="/mmpass-sistema-WEB/dashboard.php" class="nav-link">
+                <a href="index.php?url=dashboard" class="nav-link">
                     <i data-lucide="layout-grid" class="icon-sm"></i> Mural
                 </a>
-                <a href="/mmpass-sistema-WEB/meus-eventos.php" class="nav-link">
+                <a href="index.php?url=meus-eventos" class="nav-link">
                     <i data-lucide="calendar" class="icon-sm"></i> Meus Eventos
                 </a>
-                <a href="/mmpass-sistema-WEB/cupons.php" class="nav-link active">
+                <a href="index.php?url=cupons" class="nav-link active">
                     <i data-lucide="ticket" class="icon-sm"></i> Cupons
                 </a>
             </nav>
 
             <div class="header-actions">
-                <a href="/mmpass-sistema-WEB/meus-eventos.php" class="user-profile-summary">
+                <a href="index.php?url=meus-eventos" class="user-profile-summary">
                     <div class="user-avatar-sm">
                         <?= strtoupper(substr($_SESSION['usuario_nome'], 0, 1)) ?>
                     </div>
                     <span><?= explode(' ', $_SESSION['usuario_nome'])[0] ?></span>
                 </a>
-                <a href="/mmpass-sistema-WEB/logout.php" class="btn-logout-icon" title="Sair do Portal">
+                <a href="index.php?url=logout" class="btn-logout-icon" title="Sair do Portal">
                     <i data-lucide="log-out" class="icon-sm"></i>
                 </a>
             </div>
@@ -51,7 +48,7 @@
             <h2 class="form-title">
                 <i data-lucide="plus-circle" class="icon-purple"></i> Criar Novo Cupom
             </h2>
-            <form action="/mmpass-sistema-WEB/controllers/CupomController.php?action=cadastrar" method="POST" class="event-form" id="couponForm">
+            <form action="index.php?url=cupons/save" method="POST" class="event-form" id="couponForm">
                 <input type="hidden" name="id" id="cupomId">
                 <input type="text" name="nome" id="cupomNome" class="input-field" placeholder="Nome do Cupom (Ex: MAKO20)" required>
                 <input type="number" name="desconto" id="cupomDesconto" class="input-field" placeholder="Desconto (%) de 0 a 100" min="0" max="100" required>
@@ -90,7 +87,7 @@
                             <button class="btn-edit-icon" onclick='editCupom(<?= json_encode($c) ?>)'>
                                 <i data-lucide="edit-3" class="icon-sm"></i>
                             </button>
-                            <a href="/mmpass-sistema-WEB/controllers/CupomController.php?action=excluir&id=<?= $c['id'] ?>" 
+                            <a href="index.php?url=cupons/delete&id=<?= $c['id'] ?>" 
                                class="btn-logout-icon" onclick="return confirm('Excluir este cupom?')">
                                 <i data-lucide="trash-2" class="icon-sm"></i>
                             </a>
@@ -110,7 +107,6 @@
 
     <script>
         function editCupom(cupom) {
-            // Normalização no JS também
             const nivel = cupom.nivel || cupom['nível'];
             const desconto = cupom.desconto || cupom['desconto%'];
 
@@ -119,10 +115,8 @@
             document.getElementById('cupomDesconto').value = desconto;
             document.getElementById('cupomNivel').value = nivel;
             
-            document.getElementById('couponForm').action = "/mmpass-sistema-WEB/controllers/CupomController.php?action=editar";
+            document.getElementById('couponForm').action = "index.php?url=cupons/update";
             document.getElementById('btnCancel').style.display = 'block';
-            
-            // Scroll to form
             document.getElementById('couponForm').scrollIntoView({ behavior: 'smooth' });
         }
 
@@ -132,7 +126,7 @@
             document.getElementById('cupomDesconto').value = "";
             document.getElementById('cupomNivel').value = "";
             
-            document.getElementById('couponForm').action = "/mmpass-sistema-WEB/controllers/CupomController.php?action=cadastrar";
+            document.getElementById('couponForm').action = "index.php?url=cupons/save";
             document.getElementById('btnCancel').style.display = 'none';
         }
 

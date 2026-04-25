@@ -1,6 +1,3 @@
-<?php
-// Detalhes Evento View
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -17,37 +14,37 @@
     <div class="main-container">
         <!-- Header -->
         <div class="header glass animate">
-            <a href="/mmpass-sistema-WEB/dashboard.php" class="header-brand">
+            <a href="index.php?url=dashboard" class="header-brand">
                 <img src="/mmpass-sistema-WEB/assets/logo.png" alt="Logo MMPass" class="header-logo">
                 <h1 class="gradient-text">MMPass</h1>
             </a>
 
             <nav class="header-nav">
-                <a href="/mmpass-sistema-WEB/dashboard.php" class="nav-link">
+                <a href="index.php?url=dashboard" class="nav-link">
                     <i data-lucide="layout-grid" class="icon-sm"></i> Mural
                 </a>
-                <a href="/mmpass-sistema-WEB/meus-eventos.php" class="nav-link active">
+                <a href="index.php?url=meus-eventos" class="nav-link active">
                     <i data-lucide="calendar" class="icon-sm"></i> Meus Eventos
                 </a>
-                <a href="/mmpass-sistema-WEB/cupons.php" class="nav-link">
+                <a href="index.php?url=cupons" class="nav-link">
                     <i data-lucide="ticket" class="icon-sm"></i> Cupons
                 </a>
             </nav>
 
             <div class="header-actions">
-                <a href="/mmpass-sistema-WEB/meus-eventos.php" class="user-profile-summary">
+                <a href="index.php?url=meus-eventos" class="user-profile-summary">
                     <div class="user-avatar-sm">
                         <?= strtoupper(substr($_SESSION['usuario_nome'], 0, 1)) ?>
                     </div>
                     <span><?= explode(' ', $_SESSION['usuario_nome'])[0] ?></span>
                 </a>
-                <a href="/mmpass-sistema-WEB/logout.php" class="btn-logout-icon" title="Sair do Portal">
+                <a href="index.php?url=logout" class="btn-logout-icon" title="Sair do Portal">
                     <i data-lucide="log-out" class="icon-sm"></i>
                 </a>
             </div>
         </div>
 
-        <a href="/mmpass-sistema-WEB/meus-eventos.php" class="btn-outline animate back-link">
+        <a href="index.php?url=meus-eventos" class="btn-outline animate back-link">
             <i data-lucide="chevron-left" class="icon-sm"></i> Voltar aos Meus Eventos
         </a>
 
@@ -91,21 +88,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($compras as $c): ?>
-                    <tr>
-                        <td class="td-bold"><?= htmlspecialchars($c['comprador_nome']) ?></td>
-                        <td class="td-muted"><?= htmlspecialchars($c['comprador_email']) ?></td>
-                        <td class="ticket-code"><?= htmlspecialchars($c['codigo']) ?></td>
-                        <td>
-                            <?php if($c['usado']): ?>
-                                <span class="status-badge used">Utilizado</span>
-                            <?php else: ?>
-                                <span class="status-badge available">Disponível</span>
-                            <?php endif; ?>
-                        </td>
-                        <td class="td-muted"><?= date('d/m/Y H:i', strtotime($c['data_compra'])) ?></td>
-                    </tr>
-                    <?php endforeach; ?>
+                    <?php if(is_array($compras)): ?>
+                        <?php foreach($compras as $c): ?>
+                        <tr>
+                            <td class="td-bold"><?= htmlspecialchars($c['comprador_nome']) ?></td>
+                            <td class="td-muted"><?= htmlspecialchars($c['comprador_email']) ?></td>
+                            <td class="ticket-code"><?= htmlspecialchars($c['codigo']) ?></td>
+                            <td>
+                                <?php if($c['usado']): ?>
+                                    <span class="status-badge used">Utilizado</span>
+                                <?php else: ?>
+                                    <span class="status-badge available">Disponível</span>
+                                <?php endif; ?>
+                            </td>
+                            <td class="td-muted"><?= date('d/m/Y H:i', strtotime($c['data_compra'])) ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                    
                     <?php if(empty($compras)): ?>
                     <tr>
                         <td colspan="5" class="no-data-msg">

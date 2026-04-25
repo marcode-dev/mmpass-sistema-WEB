@@ -1,0 +1,21 @@
+# Arquivos de Configuração Sensíveis
+config/Supabase.php
+config/Database.php
+
+# Pastas de ambiente e dependências
+node_modules/
+vendor/
+.env
+
+# Arquivos do Sistema Operacional
+.DS_Store
+Thumbs.db
+
+# Logs
+error_log
+access_log
+*.log
+
+# Pastas de Cache / Temporários
+.cache/
+tmp/

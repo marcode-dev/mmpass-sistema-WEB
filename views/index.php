@@ -3,39 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MMPass - Login</title>
+    <title>Login - MMPass</title>
     <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/global.css?v=1.1">
     <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/components.css?v=1.1">
-    <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/auth.css?v=1.1">
+    <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/auth.css?v=1.3">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="auth-body">
-    <div class="auth-card glass animate">
-        <h1 class="logo gradient-text">MMPass</h1>
-        <p class="auth-subtitle">Portal da Ilha Mako</p>
+<body>
+    <div class="auth-wrapper">
+        <div class="bubbles-container">
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+        </div>
 
-        <?php if ($mensagem != ""): ?>
-            <div class="animate auth-msg <?= $classe_msg == 'erro' ? 'erro' : 'sucesso' ?>">
-                <?php echo $mensagem; ?>
-            </div>
-        <?php endif; ?>
-
-        <form action="/mmpass-sistema-WEB/controllers/LoginController.php" method="POST">
-            <div class="form-group">
-                <label>E-mail</label>
-                <input type="email" name="email" class="input-field" placeholder="seuemail@email.com" required>
-            </div>
-            
-            <div class="form-group mb-30">
-                <label>Senha</label>
-                <input type="password" name="senha" class="input-field" placeholder="********" required>
+        <div class="auth-box animate">
+            <div class="auth-header">
+                <img src="/mmpass-sistema-WEB/assets/logo.png" alt="Logo" class="auth-logo">
+                <h1 class="gradient-text">MMPass</h1>
+                <p class="text-muted">Seu portal de eventos na Ilha Mako</p>
             </div>
 
-            <button type="submit" class="btn-grad w-full">Entrar na Ilha</button>
-        </form>
+            <?php if (isset($mensagem) && $mensagem): ?>
+                <div class="alert alert-<?= $classe_msg ?>"><?= $mensagem ?></div>
+            <?php endif; ?>
 
-        <p class="auth-footer">
-            Novo por aqui? <a href="cadastro.php" class="gradient-text auth-link">Crie sua conta</a>
-        </p>
+            <form action="index.php?url=auth/login" method="POST" class="auth-form">
+                <div class="input-with-icon">
+                    <i data-lucide="mail"></i>
+                    <input type="email" name="email" placeholder="E-mail" required>
+                </div>
+
+                <div class="input-with-icon">
+                    <i data-lucide="lock"></i>
+                    <input type="password" name="senha" placeholder="Senha" required>
+                </div>
+
+                <button type="submit" class="btn-grad-flet">Entrar</button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Não tem conta? <a href="index.php?url=cadastro" class="gradient-text">Criar Agora</a></p>
+            </div>
+        </div>
     </div>
+    <script>lucide.createIcons();</script>
 </body>
 </html>

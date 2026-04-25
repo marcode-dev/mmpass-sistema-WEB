@@ -3,44 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MMPass - Criar Conta</title>
+    <title>Cadastro - MMPass</title>
     <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/global.css?v=1.1">
     <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/components.css?v=1.1">
-    <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/auth.css?v=1.1">
+    <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/auth.css?v=1.3">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="auth-body">
-    <div class="auth-card glass animate">
-        <h1 class="logo gradient-text">MMPass</h1>
-        <h2>Criar Nova Conta</h2>
+<body>
+    <div class="auth-wrapper">
+        <div class="bubbles-container">
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+        </div>
 
-        <?php if ($mensagem != ""): ?>
-            <div class="animate auth-msg erro">
-                <?php echo $mensagem; ?>
-            </div>
-        <?php endif; ?>
-
-        <form action="/mmpass-sistema-WEB/controllers/CadastroController.php" method="POST">
-            <div class="form-group">
-                <label>Nome Completo</label>
-                <input type="text" name="nome" class="input-field" placeholder="Ex: Cleo Sertori" required>
-            </div>
-
-            <div class="form-group">
-                <label>E-mail</label>
-                <input type="email" name="email" class="input-field" placeholder="seuemail@email.com" required>
+        <div class="auth-box animate">
+            <div class="auth-header">
+                <img src="/mmpass-sistema-WEB/assets/logo.png" alt="Logo" class="auth-logo">
+                <h1 class="gradient-text">MMPass</h1>
+                <p class="text-muted">Crie sua conta na Ilha Mako</p>
             </div>
 
-            <div class="form-group mb-25">
-                <label>Senha</label>
-                <input type="password" name="senha" class="input-field" placeholder="********" required>
+            <?php if (isset($mensagem) && $mensagem): ?>
+                <div class="alert alert-erro"><?= $mensagem ?></div>
+            <?php endif; ?>
+
+            <form action="index.php?url=auth/register" method="POST" class="auth-form">
+                <div class="input-with-icon">
+                    <i data-lucide="user"></i>
+                    <input type="text" name="nome" placeholder="Nome Completo" required>
+                </div>
+
+                <div class="input-with-icon">
+                    <i data-lucide="mail"></i>
+                    <input type="email" name="email" placeholder="E-mail" required>
+                </div>
+
+                <div class="input-with-icon">
+                    <i data-lucide="lock"></i>
+                    <input type="password" name="senha" placeholder="Senha" required>
+                </div>
+
+                <button type="submit" class="btn-grad-flet">Criar Conta</button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Já tem uma conta? <a href="index.php?url=login" class="gradient-text">Fazer Login</a></p>
             </div>
-
-            <button type="submit" class="btn-grad w-full">Cadastrar na Ilha</button>
-        </form>
-
-        <a href="index.php" class="gradient-text auth-link-block">
-            Já possui uma conta? Voltar ao login
-        </a>
+        </div>
     </div>
+    <script>lucide.createIcons();</script>
 </body>
 </html>

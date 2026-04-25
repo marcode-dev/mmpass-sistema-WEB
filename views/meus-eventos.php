@@ -1,6 +1,3 @@
-<?php
-// Perfil (Meus Eventos) View
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -17,31 +14,31 @@
     <div class="main-container">
         <!-- Header -->
         <div class="header glass animate">
-            <a href="/mmpass-sistema-WEB/dashboard.php" class="header-brand">
+            <a href="index.php?url=dashboard" class="header-brand">
                 <img src="/mmpass-sistema-WEB/assets/logo.png" alt="Logo MMPass" class="header-logo">
                 <h1 class="gradient-text">MMPass</h1>
             </a>
 
             <nav class="header-nav">
-                <a href="/mmpass-sistema-WEB/dashboard.php" class="nav-link">
+                <a href="index.php?url=dashboard" class="nav-link">
                     <i data-lucide="layout-grid" class="icon-sm"></i> Mural
                 </a>
-                <a href="/mmpass-sistema-WEB/meus-eventos.php" class="nav-link active">
+                <a href="index.php?url=meus-eventos" class="nav-link active">
                     <i data-lucide="calendar" class="icon-sm"></i> Meus Eventos
                 </a>
-                <a href="/mmpass-sistema-WEB/cupons.php" class="nav-link">
+                <a href="index.php?url=cupons" class="nav-link">
                     <i data-lucide="ticket" class="icon-sm"></i> Cupons
                 </a>
             </nav>
 
             <div class="header-actions">
-                <a href="/mmpass-sistema-WEB/meus-eventos.php" class="user-profile-summary">
+                <a href="index.php?url=meus-eventos" class="user-profile-summary">
                     <div class="user-avatar-sm">
                         <?= strtoupper(substr($_SESSION['usuario_nome'], 0, 1)) ?>
                     </div>
                     <span><?= explode(' ', $_SESSION['usuario_nome'])[0] ?></span>
                 </a>
-                <a href="/mmpass-sistema-WEB/logout.php" class="btn-logout-icon" title="Sair do Portal">
+                <a href="index.php?url=logout" class="btn-logout-icon" title="Sair do Portal">
                     <i data-lucide="log-out" class="icon-sm"></i>
                 </a>
             </div>
@@ -68,7 +65,7 @@
                 </div>
 
                 <!-- Form Inputs -->
-                <form action="/mmpass-sistema-WEB/controllers/EventoController.php?action=cadastrar" method="POST" class="event-form">
+                <form action="index.php?url=eventos/save" method="POST" class="event-form">
                     <input type="text" name="nome" class="input-field" placeholder="Nome do Evento" required>
                     <input type="date" name="data" class="input-field" required>
                     <input type="text" name="local" class="input-field" placeholder="Localização (Ex: Blue Lagoon, Mako)" required>
@@ -108,7 +105,7 @@
                          data-local="<?= strtolower(htmlspecialchars($me['local'])) ?>"
                          data-preco="<?= $me['preco'] ?>"
                          data-timestamp="<?= strtotime($me['data']) ?>"
-                         onclick="if(!event.target.closest('.no-click')) window.location.href='/mmpass-sistema-WEB/detalhes_evento.php?id=<?= $me['id'] ?>'">
+                         onclick="if(!event.target.closest('.no-click')) window.location.href='index.php?url=eventos/detalhes&id=<?= $me['id'] ?>'">
                         
                         <div class="event-item-inner">
                             <div class="event-img-container">
@@ -136,7 +133,7 @@
                         </div>
 
                         <div class="event-actions">
-                            <a href="/mmpass-sistema-WEB/controllers/EventoController.php?action=excluir&id=<?= $me['id'] ?>"
+                            <a href="index.php?url=eventos/delete&id=<?= $me['id'] ?>"
                                class="btn-logout-icon"
                                onclick="return confirm('Tem certeza que deseja remover este evento?')">
                                <i data-lucide="trash-2" class="icon-sm"></i>
