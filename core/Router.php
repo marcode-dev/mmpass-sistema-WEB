@@ -79,7 +79,30 @@ class Router {
                 (new CouponController())->delete();
                 break;
 
+            case 'perfil':
+                require_once 'controllers/ProfileController.php';
+                (new ProfileController())->index();
+                break;
+
+            case 'perfil/update':
+                require_once 'controllers/ProfileController.php';
+                (new ProfileController())->update();
+                break;
+
+            case 'perfil/update-password':
+                require_once 'controllers/ProfileController.php';
+                (new ProfileController())->updatePassword();
+                break;
+
+            case 'perfil/delete':
+                require_once 'controllers/ProfileController.php';
+                (new ProfileController())->delete();
+                break;
+
+
             default:
+
+
                 header("HTTP/1.0 404 Not Found");
                 echo "Página não encontrada!";
                 break;

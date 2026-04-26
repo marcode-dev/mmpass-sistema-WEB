@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro - MMPass</title>
+    <link rel="icon" type="image/png" href="/mmpass-sistema-WEB/assets/logo.png">
     <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/global.css?v=1.1">
     <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/components.css?v=1.1">
     <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/auth.css?v=1.3">

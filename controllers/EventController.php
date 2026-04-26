@@ -25,11 +25,43 @@ class EventController extends Controller {
         $compras = $eventoModel->buscarCompras($evento_id);
         $total_ingressos = is_array($compras) ? count($compras) : 0;
 
+        // Cálculos de Entrada
+        $pessoas_entraram = 0;
+        foreach($compras as $c) {
+            if($c['usado']) $pessoas_entraram++;
+        }
+        $pessoas_faltam = $total_ingressos - $pessoas_entraram;
+        
+        // Taxa de Entrada (%)
+        $taxa_entrada = ($total_ingressos > 0) ? round(($pessoas_entraram / $total_ingressos) * 100, 1) : 0;
+
+        // Relação Vendas / Capacidade
+        $capacidade = $evento['capacidade'] ?? 0;
+        $taxa_venda = ($capacidade > 0) ? round(($total_ingressos / $capacidade) * 100, 1) : 0;
+
+        // Financeiro Inicial
+        $preco_unitario = (float)($evento['preco'] ?? 0);
+        $receita_bruta = $total_ingressos * $preco_unitario;
+
+        // Status Dinâmico
+        $hoje = date('Y-m-d');
+        $data_evento = date('Y-m-d', strtotime($evento['data']));
+        $status_texto = ($data_evento >= $hoje) ? 'Ativo' : 'Encerrado';
+        $status_class = ($data_evento >= $hoje) ? 'status-active' : 'status-closed';
+
         $this->view('detalhes_evento', [
             'evento' => $evento,
             'compras' => $compras,
-            'total_ingressos' => $total_ingressos
+            'total_ingressos' => $total_ingressos,
+            'pessoas_entraram' => $pessoas_entraram,
+            'pessoas_faltam' => $pessoas_faltam,
+            'taxa_entrada' => $taxa_entrada,
+            'taxa_venda' => $taxa_venda,
+            'receita_bruta' => $receita_bruta,
+            'status_texto' => $status_texto,
+            'status_class' => $status_class
         ]);
+
     }
 
     public function save() {

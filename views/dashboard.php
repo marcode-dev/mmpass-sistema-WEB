@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MMPass - Mural de Eventos</title>
+    <link rel="icon" type="image/png" href="/mmpass-sistema-WEB/assets/logo.png">
     <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/global.css?v=1.1">
     <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/components.css?v=1.1">
     <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/dashboard.css?v=1.1">
@@ -32,7 +33,7 @@
             </nav>
 
             <div class="header-actions">
-                <a href="index.php?url=meus-eventos" class="user-profile-summary">
+                <a href="index.php?url=perfil" class="user-profile-summary">
                     <div class="user-avatar-sm">
                         <?= strtoupper(substr($_SESSION['usuario_nome'], 0, 1)) ?>
                     </div>
@@ -45,13 +46,14 @@
         </div>
 
         <!-- Banner de Boas-vindas -->
-        <div class="profile-card glass animate mb-40">
+        <div class="welcome-banner glass animate mb-40">
             <div class="avatar"><i data-lucide="sparkles"></i></div>
             <div>
                 <h2>Olá, <span class="gradient-text"><?= htmlspecialchars($_SESSION['usuario_nome']) ?></span>!</h2>
                 <p class="text-muted">Explore os eventos ativos na Ilha Mako hoje.</p>
             </div>
         </div>
+
 
         <h2 class="section-title animate">
             Eventos em Destaque <i data-lucide="sparkles" class="icon-pink"></i>
@@ -77,13 +79,20 @@
                             <p class="card-info">
                                 <i data-lucide="calendar" class="icon-sm"></i> <?= date('d/m/Y', strtotime($ev['data'])) ?>
                             </p>
+                            <div class="hype-badge">
+                                <i data-lucide="flame" class="icon-sm"></i> Hype: <?= $ev['favoritos'][0]['count'] ?? 0 ?>
+                            </div>
                             <div class="price-badge">R$ <?= number_format($ev['preco'], 2, ',', '.') ?></div>
+                            
                         </div>
+
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>
+        <?php include 'footer.php'; ?>
     </div>
+
     <script>lucide.createIcons();</script>
 </body>
 </html>

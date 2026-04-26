@@ -37,5 +37,20 @@ class Usuario {
         $response = $this->api->get($this->table_name, "email=eq." . urlencode($email) . "&select=id&limit=1");
         return ($response && count($response) > 0);
     }
+
+    public function atualizar($id, $nome, $email) {
+        $data = ["nome" => $nome, "email" => $email];
+        return $this->api->patch($this->table_name, $id, $data) !== false;
+    }
+
+    public function atualizarSenha($id, $nova_p_hash) {
+        $data = ["senha" => $nova_p_hash];
+        return $this->api->patch($this->table_name, $id, $data) !== false;
+    }
+
+    public function deletar($id) {
+        return $this->api->delete($this->table_name, $id) !== false;
+    }
 }
+
 ?>

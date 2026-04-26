@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meus Eventos - MMPass</title>
+    <link rel="icon" type="image/png" href="/mmpass-sistema-WEB/assets/logo.png">
     <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/global.css?v=1.1">
     <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/components.css?v=1.1">
     <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/dashboard.css?v=1.1">
@@ -32,7 +33,7 @@
             </nav>
 
             <div class="header-actions">
-                <a href="index.php?url=meus-eventos" class="user-profile-summary">
+                <a href="index.php?url=perfil" class="user-profile-summary">
                     <div class="user-avatar-sm">
                         <?= strtoupper(substr($_SESSION['usuario_nome'], 0, 1)) ?>
                     </div>
@@ -90,6 +91,8 @@
                         <option value="oldest">Mais Antigos</option>
                         <option value="price-high">Maior Preço</option>
                         <option value="price-low">Menor Preço</option>
+                        <option value="hype-high">Maior Hype</option>
+                        <option value="hype-low">Menor Hype</option>
                         <option value="name-az">Nome (A-Z)</option>
                     </select>
                 </div>
@@ -104,6 +107,7 @@
                          data-nome="<?= strtolower(htmlspecialchars($me['nome'])) ?>"
                          data-local="<?= strtolower(htmlspecialchars($me['local'])) ?>"
                          data-preco="<?= $me['preco'] ?>"
+                         data-hype="<?= $me['favoritos'][0]['count'] ?? 0 ?>"
                          data-timestamp="<?= strtotime($me['data']) ?>"
                          onclick="if(!event.target.closest('.no-click')) window.location.href='index.php?url=eventos/detalhes&id=<?= $me['id'] ?>'">
                         
@@ -126,6 +130,9 @@
                                         </div>
                                     </div>
                                     <div class="event-price-container">
+                                        <div class="hype-badge no-click m-0">
+                                            <i data-lucide="flame" class="icon-sm"></i> Hype: <?= $me['favoritos'][0]['count'] ?? 0 ?>
+                                        </div>
                                         <span class="gradient-text event-price">R$ <?= number_format($me['preco'], 2, ',', '.') ?></span>
                                     </div>
                                 </div>
@@ -133,13 +140,17 @@
                         </div>
 
                         <div class="event-actions">
+                            <a href="index.php?url=eventos/detalhes&id=<?= $me['id'] ?>" class="btn-manage no-click">
+                                <i data-lucide="settings" class="icon-sm"></i> Gerenciar
+                            </a>
                             <a href="index.php?url=eventos/delete&id=<?= $me['id'] ?>"
-                               class="btn-logout-icon"
+                               class="btn-logout-icon no-click"
                                onclick="return confirm('Tem certeza que deseja remover este evento?')">
                                <i data-lucide="trash-2" class="icon-sm"></i>
                             </a>
                         </div>
                     </div>
+
                 <?php endforeach; ?>
             <?php else: ?>
                 <div class="glass animate no-events-placeholder">
@@ -196,6 +207,8 @@
                     const priceB = parseFloat(b.getAttribute('data-preco'));
                     const timeA = parseInt(a.getAttribute('data-timestamp'));
                     const timeB = parseInt(b.getAttribute('data-timestamp'));
+                    const hypeA = parseInt(a.getAttribute('data-hype')) || 0;
+                    const hypeB = parseInt(b.getAttribute('data-hype')) || 0;
                     const nameA = a.getAttribute('data-nome');
                     const nameB = b.getAttribute('data-nome');
 
@@ -203,6 +216,8 @@
                     if (sort === 'oldest') return timeA - timeB;
                     if (sort === 'price-high') return priceB - priceA;
                     if (sort === 'price-low') return priceA - priceB;
+                    if (sort === 'hype-high') return hypeB - hypeA;
+                    if (sort === 'hype-low') return hypeA - hypeB;
                     if (sort === 'name-az') return nameA.localeCompare(nameB);
                     return 0;
                 });
@@ -211,6 +226,9 @@
             }
             lucide.createIcons();
         </script>
+        <?php include 'footer.php'; ?>
     </div>
+
+
 </body>
 </html>

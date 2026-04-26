@@ -38,7 +38,7 @@
 .bubble:nth-child(even) { 
     width: 450px; 
     height: 450px; 
-    background: rgba(179, 215, 255, 0.3); /* Azul muito suave, quase sumindo no fundo */
+    background: rgba(194, 222, 255, 0.6); /* Azul muito suave, quase sumindo no fundo */
 }
 
 .bubble:nth-child(1) { left: -100px; top: -100px; animation-duration: 25s; }

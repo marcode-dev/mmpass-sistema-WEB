@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar Cupons - MMPass</title>
+    <link rel="icon" type="image/png" href="/mmpass-sistema-WEB/assets/logo.png">
     <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/global.css?v=1.1">
     <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/components.css?v=1.1">
     <link rel="stylesheet" href="/mmpass-sistema-WEB/assets/css/dashboard.css?v=1.1">
@@ -32,7 +33,7 @@
             </nav>
 
             <div class="header-actions">
-                <a href="index.php?url=meus-eventos" class="user-profile-summary">
+                <a href="index.php?url=perfil" class="user-profile-summary">
                     <div class="user-avatar-sm">
                         <?= strtoupper(substr($_SESSION['usuario_nome'], 0, 1)) ?>
                     </div>
@@ -103,7 +104,9 @@
                 </div>
             <?php endif; ?>
         </div>
+        <?php include 'footer.php'; ?>
     </div>
+
 
     <script>
         function editCupom(cupom) {

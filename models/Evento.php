@@ -8,11 +8,11 @@ class Evento {
     }
 
     public function buscarPorUsuario($usuario_id) {
-        return $this->api->get($this->table_name, "usuario_id=eq." . $usuario_id . "&order=data.desc");
+        return $this->api->get($this->table_name, "select=*,favoritos(count)&usuario_id=eq." . $usuario_id . "&order=data.desc");
     }
 
     public function buscarPorIdEUsuario($id, $usuario_id) {
-        $response = $this->api->get($this->table_name, "id=eq." . $id . "&usuario_id=eq." . $usuario_id . "&limit=1");
+        $response = $this->api->get($this->table_name, "select=*,favoritos(count)&id=eq." . $id . "&usuario_id=eq." . $usuario_id . "&limit=1");
         return ($response && count($response) > 0) ? $response[0] : false;
     }
 
@@ -58,7 +58,7 @@ class Evento {
     }
 
     public function buscarTodos() {
-        return $this->api->get($this->table_name, "order=data.asc");
+        return $this->api->get($this->table_name, "select=*,favoritos(count)&order=data.asc");
     }
 }
 ?>

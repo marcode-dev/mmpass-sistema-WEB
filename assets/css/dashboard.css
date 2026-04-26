@@ -250,3 +250,46 @@
     align-items: center;
     gap: 5px;
 }
+
+.hype-badge {
+    background: linear-gradient(135deg, #f6ad55 0%, #ed8936 100%);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    box-shadow: 0 4px 12px rgba(237, 137, 54, 0.3);
+}
+
+.price-badge {
+    background: transparent !important;
+    border: 1.5px solid rgba(188, 152, 230, 0.4);
+    color: #bc98e6 !important;
+    padding: 6px 14px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    display: inline-flex !important;
+    align-items: center;
+    margin-top: 15px;
+    margin-left: 10px;
+    border-radius: 50px !important;
+}
+
+
+.welcome-banner {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 30px 40px;
+}
+
+.welcome-banner h2 {
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
