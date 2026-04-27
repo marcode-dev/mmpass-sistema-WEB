@@ -17,8 +17,17 @@ class CouponController extends Controller {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') $this->redirect('index.php?url=cupons');
 
         $cupomModel = new Cupom($this->db);
-        $cupomModel->cadastrar($_POST['nome'], $_POST['desconto'], $_POST['nivel'], $_SESSION['usuario_id']);
+        $result = $cupomModel->cadastrar($_POST['nome'], $_POST['desconto'], $_POST['nivel'], $_SESSION['usuario_id']);
         
+        if (is_array($result) && isset($result['error'])) {
+            echo "<h2>Erro ao salvar cupom:</h2>";
+            echo "<pre>";
+            print_r($result);
+            echo "</pre>";
+            echo "<a href='index.php?url=cupons'>Voltar</a>";
+            exit;
+        }
+
         $this->redirect('index.php?url=cupons');
     }
 

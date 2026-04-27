@@ -58,6 +58,11 @@ class Router {
                 require_once 'controllers/EventController.php';
                 (new EventController())->delete();
                 break;
+            
+            case 'eventos/update':
+                require_once 'controllers/EventController.php';
+                (new EventController())->update();
+                break;
 
             case 'cupons':
                 require_once 'controllers/CouponController.php';

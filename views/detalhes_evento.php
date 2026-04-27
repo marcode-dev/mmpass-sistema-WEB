@@ -51,7 +51,8 @@
 
         <div class="event-hero animate mb-40">
             <div class="event-hero-banner glass">
-                <img src="<?= $evento['imagem'] ?>" class="hero-bg-img" onerror="this.src='https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1200'">
+                <?php $imagem = !empty($evento['imagem']) ? $evento['imagem'] : '/mmpass-sistema-WEB/assets/default-event.png'; ?>
+                <img src="<?= $imagem ?>" class="hero-bg-img" onerror="this.src='/mmpass-sistema-WEB/assets/default-event.png'">
                 <div class="hero-overlay"></div>
                 <div class="hero-content">
                     <div class="hero-badge">
@@ -124,35 +125,59 @@
         </div>
         
         <!-- Painel Financeiro -->
-        <div class="glass animate anim-delay-4 finance-section mt-30">
-            <div class="finance-grid">
-                <div class="finance-item">
-                    <span class="mini-stat-label">Preço Unitário</span>
-                    <span class="mini-stat-value">R$ <?= number_format($evento['preco'], 2, ',', '.') ?></span>
+        <!-- Painel Financeiro (Dashboard Bar) -->
+        <div class="glass animate anim-delay-4 finance-bar mt-30">
+            <div class="finance-bar-item">
+                <span class="mini-stat-label">Receita Bruto</span>
+                <span class="val text-purple">R$ <?= number_format($receita_bruta, 2, ',', '.') ?></span>
+            </div>
+            
+            <div class="finance-bar-divider"></div>
+
+            <div class="finance-bar-item">
+                <span class="mini-stat-label">Descontos</span>
+                <span class="val text-pink" style="color: #f6a5c1;">- R$ <?= number_format($desconto_total, 2, ',', '.') ?></span>
+            </div>
+
+            <div class="finance-bar-divider"></div>
+
+            <div class="finance-bar-item">
+                <span class="mini-stat-label">Comissão (%)</span>
+                <div class="flex-center-start gap-10">
+                    <input type="number" id="lucroPercent" value="10" min="0" max="100" class="input-ultra-mini" oninput="updateFinance()">
+                    <span class="text-muted" style="font-size: 10px;">%</span>
                 </div>
-                <div class="finance-item">
-                    <span class="mini-stat-label">Receita Bruta</span>
-                    <span class="mini-stat-value text-purple">R$ <?= number_format($receita_bruta, 2, ',', '.') ?></span>
-                </div>
-                <div class="finance-item border-left">
-                    <span class="mini-stat-label">Comissão Empresa (%)</span>
-                    <div class="flex-center-start gap-10">
-                        <input type="number" id="lucroPercent" value="10" min="0" max="100" class="input-mini">
-                        <span class="text-muted">%</span>
-                    </div>
-                </div>
-                <div class="finance-item">
-                    <span class="mini-stat-label">Lucro Líquido</span>
-                    <span class="mini-stat-value text-green" style="color: #4fd1c5;">R$ <span id="lucroTotal">0,00</span></span>
-                </div>
+            </div>
+
+            <div class="finance-bar-divider"></div>
+
+            <div class="finance-bar-item">
+                <span class="mini-stat-label">Abatimento</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="aplicarDesconto" onchange="updateFinance()">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="finance-bar-divider"></div>
+
+            <div class="finance-bar-item">
+                <span class="mini-stat-label">Lucro Líquido</span>
+                <span class="val text-green" style="color: #4fd1c5;">R$ <span id="lucroTotal">0,00</span></span>
             </div>
         </div>
 
         <script>
             function updateFinance() {
                 const bruta = <?= (float)$receita_bruta ?>;
+                const desconto = <?= (float)$desconto_total ?>;
+                const aplicarDesconto = document.getElementById('aplicarDesconto').checked;
+                
+                let baseCalculo = bruta;
+                if (aplicarDesconto) baseCalculo -= desconto;
+
                 const percent = document.getElementById('lucroPercent').value / 100;
-                const lucro = bruta * percent;
+                const lucro = baseCalculo * percent;
                 document.getElementById('lucroTotal').innerText = lucro.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
             }
             document.getElementById('lucroPercent').addEventListener('input', updateFinance);
@@ -161,24 +186,33 @@
 
 
 
+        <div class="table-controls animate anim-delay-4 mt-40">
+            <div class="glass search-box-wide">
+                <i data-lucide="search" class="icon-sm"></i>
+                <input type="text" id="ticketSearch" placeholder="Pesquisar por comprador ou e-mail..." onkeyup="filterTable()">
+            </div>
+        </div>
+
         <div class="table-container glass animate anim-delay-4">
-            <table>
+            <table id="ticketsTable">
                 <thead>
                     <tr>
-                        <th>Comprador</th>
-                        <th>E-mail de Contato</th>
-                        <th>Código</th>
-                        <th>Status</th>
-                        <th>Data da Transação</th>
+                        <th onclick="sortTable(0, 'number')" class="th-sortable" style="width: 50px;">ID <i data-lucide="chevrons-up-down"></i></th>
+                        <th onclick="sortTable(1, 'string')" class="th-sortable">Comprador <i data-lucide="chevrons-up-down"></i></th>
+                        <th onclick="sortTable(2, 'string')" class="th-sortable">E-mail <i data-lucide="chevrons-up-down"></i></th>
+                        <th onclick="sortTable(3, 'string')" class="th-sortable" style="width: 100px;">Status <i data-lucide="chevrons-up-down"></i></th>
+                        <th onclick="sortTable(4, 'number')" class="th-sortable text-right" style="width: 80px;">% Desc <i data-lucide="chevrons-up-down"></i></th>
+                        <th onclick="sortTable(5, 'number')" class="th-sortable text-right" style="width: 100px;">$ Desc <i data-lucide="chevrons-up-down"></i></th>
+                        <th onclick="sortTable(6, 'date')" class="th-sortable text-right" style="width: 140px;">Consumado <i data-lucide="chevrons-up-down"></i></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="ticketsBody">
                     <?php if(is_array($compras)): ?>
                         <?php foreach($compras as $c): ?>
                         <tr>
+                            <td class="td-muted">#<?= $c['id'] ?></td>
                             <td class="td-bold"><?= htmlspecialchars($c['comprador_nome']) ?></td>
                             <td class="td-muted"><?= htmlspecialchars($c['comprador_email']) ?></td>
-                            <td class="ticket-code"><?= htmlspecialchars($c['codigo']) ?></td>
                             <td>
                                 <?php if($c['usado']): ?>
                                     <span class="status-badge used">Utilizado</span>
@@ -186,7 +220,9 @@
                                     <span class="status-badge available">Disponível</span>
                                 <?php endif; ?>
                             </td>
-                            <td class="td-muted"><?= date('d/m/Y H:i', strtotime($c['data_compra'])) ?></td>
+                            <td class="text-right text-muted-sm"><?= $c['desconto'] ?>%</td>
+                            <td class="text-right text-muted-sm">R$ <?= number_format($evento['preco'] * ($c['desconto'] / 100), 2, ',', '.') ?></td>
+                            <td class="td-muted text-right" data-date="<?= strtotime($c['data_compra']) ?>"><?= date('d/m/Y H:i', strtotime($c['data_compra'])) ?></td>
                         </tr>
                         <?php endforeach; ?>
                     <?php endif; ?>
@@ -204,6 +240,62 @@
         <?php include 'footer.php'; ?>
     </div>
 
-    <script>lucide.createIcons();</script>
+        <script>
+            lucide.createIcons();
+
+            function sortTable(n, type) {
+                const tbody = document.getElementById("ticketsBody");
+                let rows = Array.from(tbody.rows);
+                
+                const currentDir = tbody.getAttribute('data-sort-dir-' + n) === 'asc' ? 'desc' : 'asc';
+                
+                rows.sort((a, b) => {
+                    let cellA = a.cells[n];
+                    let cellB = b.cells[n];
+                    let valA, valB;
+
+                    if (type === 'number') {
+                        valA = parseFloat(cellA.innerText.replace(/[^\d.-]/g, "")) || 0;
+                        valB = parseFloat(cellB.innerText.replace(/[^\d.-]/g, "")) || 0;
+                    } else if (type === 'date') {
+                        valA = parseInt(cellA.getAttribute('data-date')) || 0;
+                        valB = parseInt(cellB.getAttribute('data-date')) || 0;
+                    } else {
+                        valA = cellA.innerText.toLowerCase().trim();
+                        valB = cellB.innerText.toLowerCase().trim();
+                    }
+
+                    if (valA === valB) return 0;
+                    if (currentDir === 'asc') return valA > valB ? 1 : -1;
+                    return valA < valB ? 1 : -1;
+                });
+
+                // Clear and append
+                while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
+                rows.forEach(row => tbody.appendChild(row));
+                
+                // Clear other directions
+                for(let i=0; i<7; i++) tbody.removeAttribute('data-sort-dir-' + i);
+                tbody.setAttribute('data-sort-dir-' + n, currentDir);
+            }
+
+            function filterTable() {
+                const search = document.getElementById('ticketSearch').value.toLowerCase();
+                const tbody = document.getElementById('ticketsBody');
+                const rows = tbody.getElementsByTagName('tr');
+
+                for (let i = 0; i < rows.length; i++) {
+                    const name = rows[i].cells[1].innerText.toLowerCase();
+                    const email = rows[i].cells[2].innerText.toLowerCase();
+                    const id = rows[i].cells[0].innerText.toLowerCase();
+
+                    if (name.includes(search) || email.includes(search) || id.includes(search)) {
+                        rows[i].style.display = "";
+                    } else {
+                        rows[i].style.display = "none";
+                    }
+                }
+            }
+        </script>
 </body>
 </html>

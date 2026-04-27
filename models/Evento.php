@@ -11,8 +11,8 @@ class Evento {
         return $this->api->get($this->table_name, "select=*,favoritos(count)&usuario_id=eq." . $usuario_id . "&order=data.desc");
     }
 
-    public function buscarPorIdEUsuario($id, $usuario_id) {
-        $response = $this->api->get($this->table_name, "select=*,favoritos(count)&id=eq." . $id . "&usuario_id=eq." . $usuario_id . "&limit=1");
+    public function buscarPorId($id) {
+        $response = $this->api->get($this->table_name, "select=*,favoritos(count)&id=eq." . $id . "&limit=1");
         return ($response && count($response) > 0) ? $response[0] : false;
     }
 
@@ -31,6 +31,7 @@ class Evento {
                 "data_compra" => $item["data_compra"],
                 "codigo" => $item["codigo"] ?? "N/A",
                 "usado" => $item["usado"] ?? false,
+                "desconto" => $item["desconto"] ?? 0,
                 "comprador_nome" => $item["usuarios"]["nome"] ?? "Desconhecido",
                 "comprador_email" => $item["usuarios"]["email"] ?? ""
             ];
@@ -57,8 +58,12 @@ class Evento {
         return $response !== false;
     }
 
+    public function atualizar($id, $dados) {
+        return $this->api->patch($this->table_name, $id, $dados);
+    }
+
     public function buscarTodos() {
-        return $this->api->get($this->table_name, "select=*,favoritos(count)&order=data.asc");
+        return $this->api->get($this->table_name, "select=*,favoritos(count)&order=data.desc");
     }
 }
 ?>

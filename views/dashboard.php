@@ -70,7 +70,8 @@
                         data-timestamp="<?= strtotime($ev['data']) ?>"
                         onclick="if(!event.target.closest('.no-click')) window.location.href='index.php?url=eventos/detalhes&id=<?= $ev['id'] ?>'"
                     >
-                        <img src="<?= $ev['imagem'] ?>" onerror="this.src='https://via.placeholder.com/400x250/bc98e6/ffffff?text=Mako+Island'">
+                        <?php $imagem = !empty($ev['imagem']) ? $ev['imagem'] : '/mmpass-sistema-WEB/assets/default-event.png'; ?>
+                        <img src="<?= $imagem ?>" onerror="this.src='/mmpass-sistema-WEB/assets/default-event.png'">
                         <div class="card-content">
                             <h3><?= htmlspecialchars($ev['nome']) ?></h3>
                             <p class="card-info mt-5">

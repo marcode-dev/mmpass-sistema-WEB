@@ -58,7 +58,7 @@
                     <option value="Bronze">Bronze</option>
                     <option value="Prata">Prata</option>
                     <option value="Ouro">Ouro</option>
-                    <option value="Diamante">Diamante</option>
+                    <option value="Diamond">Diamante (Diamond)</option>
                 </select>
                 <div style="display: flex; gap: 10px;">
                     <button type="submit" class="btn-grad" style="flex: 2;">Salvar Cupom</button>
