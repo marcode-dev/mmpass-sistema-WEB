@@ -7,7 +7,11 @@ class EventController extends Controller {
     public function list() {
         $this->checkAuth();
         $eventoModel = new Evento($this->db);
-        $meus_eventos = $eventoModel->buscarTodos();
+        if (!empty($_SESSION['usuario_admin'])) {
+            $meus_eventos = $eventoModel->buscarTodos();
+        } else {
+            $meus_eventos = $eventoModel->buscarPorUsuario($_SESSION['usuario_id']);
+        }
         
         $hoje = date('Y-m-d');
         $eventos_ativos = [];
@@ -37,6 +41,10 @@ class EventController extends Controller {
         $evento = $eventoModel->buscarPorId($evento_id);
         
         if (!$evento) die("Evento não encontrado.");
+
+        if ($evento['usuario_id'] != $_SESSION['usuario_id'] && empty($_SESSION['usuario_admin'])) {
+            $this->redirect('index.php?url=meus-eventos');
+        }
 
         $compras = $eventoModel->buscarCompras($evento_id);
 
@@ -140,6 +148,14 @@ class EventController extends Controller {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') $this->redirect('index.php?url=meus-eventos');
 
         $id = $_POST['id'];
+
+        $eventoModel = new Evento($this->db);
+        $evento = $eventoModel->buscarPorId($id);
+        
+        if (!$evento || ($evento['usuario_id'] != $_SESSION['usuario_id'] && empty($_SESSION['usuario_admin']))) {
+            $this->redirect('index.php?url=meus-eventos');
+        }
+
         $imagem = !empty($_POST['imagem']) ? $_POST['imagem'] : '/mmpass-sistema-WEB/assets/default-event.png';
 
         $dados = [
@@ -151,7 +167,6 @@ class EventController extends Controller {
             "imagem" => $imagem
         ];
 
-        $eventoModel = new Evento($this->db);
         $eventoModel->atualizar($id, $dados);
 
         $this->redirect('index.php?url=meus-eventos');
@@ -162,7 +177,10 @@ class EventController extends Controller {
         $id = $_GET['id'] ?? null;
         if ($id) {
             $eventoModel = new Evento($this->db);
-            $eventoModel->excluir($id, null);
+            $evento = $eventoModel->buscarPorId($id);
+            if ($evento && ($evento['usuario_id'] == $_SESSION['usuario_id'] || !empty($_SESSION['usuario_admin']))) {
+                $eventoModel->excluir($id, $_SESSION['usuario_id']);
+            }
         }
         $this->redirect('index.php?url=meus-eventos');
     }

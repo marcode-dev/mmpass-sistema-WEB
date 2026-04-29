@@ -8,7 +8,7 @@ class Evento {
     }
 
     public function buscarPorUsuario($usuario_id) {
-        return $this->api->get($this->table_name, "select=*,favoritos(count)&usuario_id=eq." . $usuario_id . "&order=data.desc");
+        return $this->api->get($this->table_name, "select=*,favoritos(count)&usuario_id=eq." . $usuario_id . "&order=data.asc");
     }
 
     public function buscarPorId($id) {
@@ -63,7 +63,7 @@ class Evento {
     }
 
     public function buscarTodos() {
-        return $this->api->get($this->table_name, "select=*,favoritos(count)&order=data.desc");
+        return $this->api->get($this->table_name, "select=*,favoritos(count)&order=data.asc");
     }
 }
 ?>

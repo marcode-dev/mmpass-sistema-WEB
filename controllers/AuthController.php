@@ -38,6 +38,7 @@ class AuthController extends Controller {
             $_SESSION['usuario_id'] = $dadosUsuario['id'];
             $_SESSION['usuario_nome'] = $dadosUsuario['nome'];
             $_SESSION['usuario_email'] = $dadosUsuario['email'];
+            $_SESSION['usuario_admin'] = !empty($dadosUsuario['admin']);
             $this->redirect('index.php?url=dashboard');
         } else {
             $this->redirect('index.php?url=login&status=erro');
